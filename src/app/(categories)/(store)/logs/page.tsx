@@ -3,13 +3,14 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Icon from "@/components/Icon";
+import { icons } from "lucide-react";
 
 type LogType = "info" | "error" | "warning" | "success";
 type Log = {
   id: number;
   message: string;
   date: string;
-  icon: string;
+  icon: keyof typeof icons;
   type: LogType;
 };
 
@@ -75,10 +76,10 @@ function LogCard({ log }: { log: Log }) {
         log.type === "success" && "bg-green-100"
       )}
     >
-      <Icon name={log.icon} className="h-4 w-4" />
+      <Icon name={log.icon} size={16} />
       <AlertTitle>{log.message}</AlertTitle>
       <AlertDescription>
-        Tarih:{" "}
+        Tarih:
         {new Date(log.date).toLocaleDateString("tr-TR", {
           year: "numeric",
           month: "2-digit",
