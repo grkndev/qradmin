@@ -39,10 +39,10 @@ export default function Footer() {
         </button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="gap-2 flex flex-col items-center justify-between w-full px-4 py-2 bg-cafe-gray rounded">
+      <DropdownMenuContent className="shadow-none gap-2 flex flex-col items-center justify-between w-full px-4 py-2 bg-cafe-gray rounded">
         <DropdownMenuLabel>Hesaplarım</DropdownMenuLabel>
         <DropdownUser />
-        <div className="h-[1px] w-full bg-cafe-dark rounded-full" />
+        <div className="h-[1px] w-full bg-cafe-dark/50 rounded-full" />
         <AddNew />
         <Logout />
       </DropdownMenuContent>
@@ -66,24 +66,24 @@ function DropdownUser() {
 }
 function Logout() {
   return (
-    <DropdownMenuItem className="w-full gap-x-3 bg-cafe-100 rounded px-5">
+    <DropdownMenuItem className="w-full gap-x-3  rounded px-5">
       <div className="w-10 h-10 bg-[#EA9F9F] rounded-full justify-center items-center flex">
-        <LogOut size={24} color="#000" />
+        <LogOut size={18} color="#000" />
       </div>
       <div>
-        <h1 className="font-bold text-sm">Çıkış Yap</h1>
+        <h1 className="font-semibold text-sm">Çıkış Yap</h1>
       </div>
     </DropdownMenuItem>
   );
 }
 function AddNew() {
   return (
-    <DropdownMenuItem className="w-full gap-x-3 bg-cafe-100 rounded px-5">
+    <DropdownMenuItem className="w-full gap-x-3  rounded px-5">
       <div className="w-10 h-10 bg-cafe-300 rounded-full justify-center items-center flex">
-        <Plus size={24} color="#000" />
+        <Plus size={18} color="#000" />
       </div>
       <div>
-        <h1 className="font-bold text-sm">Yeni Hesap Ekle</h1>
+        <h1 className="font-semibold text-sm">Yeni Hesap Ekle</h1>
       </div>
     </DropdownMenuItem>
   );

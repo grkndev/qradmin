@@ -18,7 +18,7 @@ function Contents() {
   return (
     <div>
       {contents.map((content: any) => (
-        <div className="flex flex-col gap-1 my-4">
+        <div className="flex flex-col gap-2 my-4">
           <Label title={content.category} />
           {content.items.map((item: any) => (
             <ContentButton
