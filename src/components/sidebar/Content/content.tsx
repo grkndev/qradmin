@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useId } from "react";
 import ContentButton from "./Button/button";
 import Label from "./Label/label";
 import Icon from "@/components/Icon";
@@ -15,13 +15,18 @@ export default function Content() {
 }
 function Contents() {
   const pathName = usePathname();
+  const ids = useId();
   return (
     <div>
       {contents.map((content: any) => (
-        <div className="flex flex-col gap-2 my-4">
+        <div
+          key={ids}
+          className="flex flex-col gap-2 my-4"
+        >
           <Label title={content.category} />
           {content.items.map((item: any) => (
             <ContentButton
+              key={item.href}
               className={`${pathName === item.href ? "bg-cafe-200" : ""}`}
               icon={<Icon name={item.icon} size={24} color="#000" />}
               title={item.title}
