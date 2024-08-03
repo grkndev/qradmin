@@ -18,7 +18,10 @@ export default function ContentButton({
   return (
     <Link
       href={href}
-      className={cn("flex justify-start items-center gap-3 p-4 rounded-lg w-full", className)}
+      className={cn(
+        "flex justify-start items-center gap-3 p-4 rounded-lg w-full hover:bg-zinc-200",
+        className
+      )}
     >
       {icon}
       <span className={cn("font-semibold text-base", color)}>{title}</span>

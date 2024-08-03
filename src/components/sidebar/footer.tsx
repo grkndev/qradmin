@@ -11,7 +11,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Label from "./Content/Label/label";
 
 export default function Footer() {
   const [isOpened, setOpen] = React.useState(false);
@@ -24,7 +23,7 @@ export default function Footer() {
         <button>
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>RC</AvatarFallback>
           </Avatar>
           <div>
             <h1 className="font-bold text-sm">RABEL CAFE</h1>
