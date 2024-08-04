@@ -2,11 +2,32 @@ import { Input } from "@/components/ui/input";
 import User from "./User";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UserType } from "@/types/User.type";
+import { calculateRenewalDate } from "@/lib/utils";
 
+const user: UserType = {
+  displayName: "RABEL CAFE",
+  username: "rabelland",
+  mail: "admin@rabel.grkn.dev",
+  url: "demoqr.grkn.dev",
+  logo: "https://github.com/shadcn.png",
+  verified: true,
+  association: "GRKNSOFT",
+  company: "SHAYA KAHVE SANAYİ VE TİCARET A.Ş.",
+  premium: false,
+  membership: {
+    type: "Özelleştirilmiş Kurumsal",
+    start: new Date("2024-08-03"),
+    end: new Date("2027-08-03"),
+    lastRenew: new Date("2024-08-03"),
+    price: 99.9,
+    autoRenew: true,
+  },
+};
 export default function Analyses() {
   return (
     <div className="ml-10 p-8 w-full flex flex-col gap-y-10 h-full">
-      <User />
+      <User user={user} />
 
       <div className="w-full">
         <div>
@@ -21,7 +42,7 @@ export default function Analyses() {
             <Input
               className="w-2/3 border border-zinc-300 text-center"
               disabled
-              value={"SHAYA KAHVE SANAYİ VE TİCARET A.Ş."}
+              value={user.company}
             />
           </div>
 
@@ -29,8 +50,10 @@ export default function Analyses() {
             <span className="font-semibold">Şirket Logosu</span>
             <div className="flex gap-x-4">
               <Avatar className="w-24 h-24 rounded-lg">
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>RC</AvatarFallback>
+                <AvatarImage src={user.logo} />
+                <AvatarFallback>{`${user.displayName.split(" ")[0].charAt(0)}${
+                  user.displayName.includes(" ") && user.displayName.split(" ")[1].charAt(0)
+                }`}</AvatarFallback>
               </Avatar>
               <Input
                 className="w-2/3 border border-zinc-300 text-center"
@@ -46,34 +69,51 @@ export default function Analyses() {
               <div className="flex gap-x-4 items-center justify-between">
                 <span className="font-semibold">Üyelik Tipi</span>
                 <Badge className="text-white rounded-sm bg-cafe-800">
-                  Özelleştirilmiş Kurumsal
+                  {user.membership.type}
                 </Badge>
               </div>
 
               <div className="flex gap-x-4 items-center justify-between">
                 <span className="font-semibold">Üyelik Başlangıç Tarihi</span>
                 <Badge className="text-white rounded-sm bg-cafe-800">
-                  03/08/2024
+                  {user.membership.start
+                    .toLocaleDateString("tr-TR")
+                    .replace(/\./g, "/")}
                 </Badge>
               </div>
 
               <div className="flex gap-x-4 items-center justify-between">
                 <span className="font-semibold">Üyelik Bitiş Tarihi</span>
                 <Badge className="text-white rounded-sm bg-cafe-800">
-                  03/08/2027
+                  {user.membership.end
+                    .toLocaleDateString("tr-TR")
+                    .replace(/\./g, "/")}
                 </Badge>
               </div>
 
               <div className="flex gap-x-4 items-center justify-between">
                 <span className="font-semibold">Abonelik</span>
                 <Badge className="text-white rounded-sm bg-cafe-800">
-                  $99.90
+                  {user.membership.price.toLocaleString("tr-TR", {
+                    style: "currency",
+                    currency: "USD",
+                  })}
                 </Badge>
               </div>
-              <Badge className="text-white rounded-sm mt-10">
-                Aboneliğiniz otomatik olarak 03/08/2025 tarihinde $99.90 olarak
-                yenilenecektir.
-              </Badge>
+              {user.membership.autoRenew && (
+                <Badge className="text-white rounded-sm mt-10">
+                  Aboneliğiniz otomatik olarak{" "}
+                  {calculateRenewalDate(user.membership.lastRenew)
+                    .toLocaleDateString("tr-TR")
+                    .replace(/\./g, "/")}{" "}
+                  tarihinde{" "}
+                  {user.membership.price.toLocaleString("tr-TR", {
+                    style: "currency",
+                    currency: "USD",
+                  })}{" "}
+                  olarak yenilenecektir.
+                </Badge>
+              )}
             </div>
           </div>
         </div>
