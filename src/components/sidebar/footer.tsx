@@ -11,42 +11,49 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ModeToggle } from "../theme/ThemeToggle";
+import Icon from "../Icon";
+import { Button } from "../ui/button";
 
 export default function Footer() {
   const [isOpened, setOpen] = React.useState(false);
   return (
-    <DropdownMenu onOpenChange={setOpen}>
-      <DropdownMenuTrigger
-        className="h-16 flex items-center justify-between w-full px-4 py-2 bg-cafe-gray rounded"
-        asChild
-      >
-        <button>
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>RC</AvatarFallback>
-          </Avatar>
-          <div>
-            <h1 className="font-bold text-sm">RABEL CAFE</h1>
-            <p className="text-[12px]">admin@rabel.grkn.dev</p>
-          </div>
-          <ChevronUp
-            size={16}
-            color="#000"
-            className={`transform transition-all ${
-              isOpened ? "rotate-180" : ""
-            }`}
-          />
-        </button>
-      </DropdownMenuTrigger>
+      <DropdownMenu onOpenChange={setOpen}>
+        <DropdownMenuTrigger
+          className="h-16 gap-x-4 flex items-center justify-between w-full px-4 py-2 dark:bg-darkCafe-gray bg-cafe-gray rounded"
+          asChild
+        >
+          <button>
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>RC</AvatarFallback>
+            </Avatar>
+            <div>
+              <h1 className="font-bold text-sm">RABEL CAFE</h1>
+              <p className="text-[12px]">admin@rabel.grkn.dev</p>
+            </div>
+            <ChevronUp
+              size={16}
+              className={`dark:text-white text-dark transform transition-all ${
+                isOpened ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+        </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="shadow-none gap-2 flex flex-col items-center justify-between w-full px-4 py-2 bg-cafe-gray rounded">
-        <DropdownMenuLabel>Hesaplarım</DropdownMenuLabel>
-        <DropdownUser />
-        <div className="h-[1px] w-full bg-cafe-dark/50 rounded-full" />
-        <AddNew />
-        <Logout />
-      </DropdownMenuContent>
-    </DropdownMenu>
+        <DropdownMenuContent className="shadow-none gap-2 flex flex-col items-center justify-between w-full px-4 py-2 bg-cafe-gray dark:bg-darkCafe-gray rounded">
+          <DropdownMenuLabel>Hesaplarım</DropdownMenuLabel>
+          <DropdownUser />
+          <div className="h-[1px] w-full dark:bg-darkCafe-dark/50 bg-cafe-dark/50 rounded-full" />
+          <AddNew />
+          <Logout />
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+
+     
+
+
   );
 }
 

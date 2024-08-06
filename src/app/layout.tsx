@@ -3,7 +3,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import SideBar from "@/components/sidebar/sidebar";
 import { cn } from "@/lib/utils";
-
+import { ThemeProvider } from "@/components/theme/theme-provider";
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -19,9 +19,16 @@ export default function RootLayout({
   return (
     <html lang="en h-full ">
       <body className={cn(montserrat.className, "flex flex-row h-full")}>
-        <SideBar />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SideBar />
 
-        <main>{children}</main>
+          <main>{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );

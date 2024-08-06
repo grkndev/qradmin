@@ -32,7 +32,7 @@ export default function Analyses() {
       <div className="w-full">
         <div>
           <h1 className="font-bold text-2xl">Şirket Profili</h1>
-          <p className="text-gray-500">
+          <p className="text-gray-500 ">
             Şirket bilgilerinizi güncelleyebilirsiniz.
           </p>
         </div>
@@ -52,7 +52,8 @@ export default function Analyses() {
               <Avatar className="w-24 h-24 rounded-lg">
                 <AvatarImage src={user.logo} />
                 <AvatarFallback>{`${user.displayName.split(" ")[0].charAt(0)}${
-                  user.displayName.includes(" ") && user.displayName.split(" ")[1].charAt(0)
+                  user.displayName.includes(" ") &&
+                  user.displayName.split(" ")[1].charAt(0)
                 }`}</AvatarFallback>
               </Avatar>
               <Input
@@ -101,7 +102,7 @@ export default function Analyses() {
                 </Badge>
               </div>
               {user.membership.autoRenew && (
-                <Badge className="text-white rounded-sm mt-10">
+                <Badge className="text-white rounded-sm mt-10 bg-cafe-950">
                   Aboneliğiniz otomatik olarak{" "}
                   {calculateRenewalDate(user.membership.lastRenew)
                     .toLocaleDateString("tr-TR")

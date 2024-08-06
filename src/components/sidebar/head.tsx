@@ -1,7 +1,11 @@
+"use client";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import React from "react";
 
 export default function Head() {
+  const { theme } = useTheme();
+ 
   return (
     <div className="flex flex-row justify-center items-center">
       <div>
@@ -9,7 +13,7 @@ export default function Head() {
           className="w-20 h-20"
           height={500}
           width={500}
-          src="/rabel3.fw.png"
+          src={`/rabel${theme === "dark" ? '2' : '3'}.fw.png`}
           alt="Logo"
         />
       </div>

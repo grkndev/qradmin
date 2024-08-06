@@ -70,10 +70,10 @@ function LogCard({ log }: { log: Log }) {
     <Alert
       className={cn(
         "w-full",
-        log.type === "info" && "bg-blue-100",
-        log.type === "error" && "bg-red-100",
-        log.type === "warning" && "bg-yellow-100",
-        log.type === "success" && "bg-green-100"
+        log.type === "info" && "bg-blue-100 dark:bg-blue-900",
+        log.type === "error" && "bg-red-100 dark:bg-red-900",
+        log.type === "warning" && "bg-yellow-100 dark:bg-yellow-900",
+        log.type === "success" && "bg-green-100 dark:bg-green-900"
       )}
     >
       <Icon name={log.icon} size={16} />

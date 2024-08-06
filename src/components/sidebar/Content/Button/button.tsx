@@ -19,7 +19,7 @@ export default function ContentButton({
     <Link
       href={href}
       className={cn(
-        "flex justify-start items-center gap-3 p-4 rounded-lg w-full hover:bg-zinc-200",
+        "flex justify-start items-center gap-3 p-4 rounded-lg w-full hover:bg-zinc-200 dark:hover:bg-zinc-900",
         className
       )}
     >

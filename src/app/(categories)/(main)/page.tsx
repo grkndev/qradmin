@@ -15,16 +15,17 @@ export default function Home() {
 
       <div className="flex flex-col">
         <h2 className="font-bold text-4xl mb-4">Web Analizi</h2>
-        <div className="relative w-[850px] h-96 flex justify-center items-center bg-cafe-400">
+        <div className="relative w-[850px] h-96 flex justify-center items-center bg-cafe-400 dark:bg-darkCafe-400">
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
               backgroundImage: "url(/chart.png)",
-              filter: "blur(10px)",
             }}
           ></div>
-          <div className="relative backdrop-blur-xl bg-white/30 flex space-x-3 w-full h-full justify-center items-center">
-            <h1 className="font-bold text-2xl text-cafe-800">Bu özelliğe erişmek için Premium olmalısınız</h1>
+          <div className="relative backdrop-blur-xl bg-white/30 dark:bg-black/30 flex space-x-3 w-full h-full justify-center items-center">
+            <h1 className="font-bold text-2xl text-cafe-800 dark:text-darkCafe-800">
+              Bu özelliğe erişmek için Premium olmalısınız
+            </h1>
           </div>
         </div>
       </div>
