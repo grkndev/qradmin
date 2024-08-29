@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UserType } from "@/types/User.type";
 import { calculateRenewalDate } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const user: UserType = {
   displayName: "RABEL CAFE",
@@ -26,21 +27,24 @@ const user: UserType = {
 };
 export default function Analyses() {
   return (
-    <div className="ml-10 p-8 w-full flex flex-col gap-y-10 h-full">
+    <div className="p-6 w-full flex flex-col gap-y-10 h-full">
       <User user={user} />
 
-      <div className="w-full">
-        <div>
-          <h1 className="font-bold text-2xl">Şirket Profili</h1>
-          <p className="text-gray-500 ">
+      <div className="w-full flex flex-col items-start justify-start">
+        <div className="flex flex-row justify-between items-center w-full">
+          <div><h1 className="font-bold text-xl">Şirket Profili</h1>
+          <p className="text-gray-500 text-sm">
             Şirket bilgilerinizi güncelleyebilirsiniz.
-          </p>
+          </p></div>
+          <div>
+            <Button className="hover:bg-zinc-400 bg-zinc-200 text-black">Kaydet</Button>
+          </div>
         </div>
-        <div className="flex flex-col gap-y-5 mt-4 w-full">
-          <div className="flex gap-x-4 justify-start items-center">
+        <div className="flex flex-col items-start justify-start gap-y-5 mt-4 w-full">
+          <div className="w-full flex flex-col sm:flex-row gap-x-4 justify-start items-start">
             <span className="font-semibold">Şirket Adı</span>
             <Input
-              className="w-2/3 border border-zinc-300 text-center"
+              className="w-full border border-zinc-300 text-start"
               disabled
               value={user.company}
             />
@@ -48,7 +52,7 @@ export default function Analyses() {
 
           <div className="flex flex-col gap-y-2 justify-start items-start">
             <span className="font-semibold">Şirket Logosu</span>
-            <div className="flex gap-x-4">
+            <div className="flex sm:gap-x-4 gap-y-4 flex-col sm:flex-row">
               <Avatar className="w-24 h-24 rounded-lg">
                 <AvatarImage src={user.logo} />
                 <AvatarFallback>{`${user.displayName.split(" ")[0].charAt(0)}${
@@ -57,7 +61,7 @@ export default function Analyses() {
                 }`}</AvatarFallback>
               </Avatar>
               <Input
-                className="w-2/3 border border-zinc-300 text-center"
+                className="w-full border border-zinc-300 text-center"
                 disabled
                 type="file"
               />
@@ -66,7 +70,7 @@ export default function Analyses() {
 
           <div className="flex flex-col gap-y-2 justify-start items-start w-full mt-10">
             <span className="font-bold text-xl">Üyelik Bilgisi</span>
-            <div className="w-2/3 gap-y-2 flex-col flex">
+            <div className="w-full gap-y-2 flex-col flex">
               <div className="flex gap-x-4 items-center justify-between">
                 <span className="font-semibold">Üyelik Tipi</span>
                 <Badge className="text-white rounded-sm bg-cafe-800">
@@ -102,7 +106,7 @@ export default function Analyses() {
                 </Badge>
               </div>
               {user.membership.autoRenew && (
-                <Badge className="text-white rounded-sm mt-10 bg-cafe-950">
+                <Badge className="text-zinc-500 rounded-sm mt-10 bg-zinc-200">
                   Aboneliğiniz otomatik olarak{" "}
                   {calculateRenewalDate(user.membership.lastRenew)
                     .toLocaleDateString("tr-TR")

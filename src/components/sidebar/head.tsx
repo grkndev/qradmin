@@ -18,7 +18,7 @@ export default function Head() {
         />
       </div>
       <div className="flex flex-col justify-center items-center">
-        <h1 className="font-bold text-3xl">GRKN SOFT</h1>
+        <h1 className="font-bold text-2xl">GRKN SOFT</h1>
         <p className="font-semibold">QR MENU SCRIPTS</p>
       </div>
     </div>

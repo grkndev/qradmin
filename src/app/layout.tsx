@@ -18,11 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en h-full ">
-      <body className={cn(montserrat.className, "flex flex-row h-full")}>
+      <body className={cn(montserrat.className, "flex flex-col sm:flex-row h-full")}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
+          forcedTheme="light"
+          
           disableTransitionOnChange
         >
           <SideBar />
