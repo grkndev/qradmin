@@ -7,11 +7,13 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Icon from "../Icon";
+import { Button } from "../ui/button";
 
 export default function SideBar() {
   return (
@@ -41,9 +43,12 @@ function MobileSideBar() {
       <SheetContent side={"right"} >
         <SheetHeader>
           <SheetTitle>Yönetici Menüsü</SheetTitle>
-          <SheetDescription>
+          <SheetDescription className="">
             <Content />
           </SheetDescription>
+          <SheetFooter>
+            <Button className="w-full" variant={"destructive"}>Çıkış Yap</Button>
+          </SheetFooter>
         </SheetHeader>
       </SheetContent>
     </Sheet>

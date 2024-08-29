@@ -16,7 +16,7 @@ import {
 
 export default function Content() {
   return (
-    <div className="w-full flex flex-col gap-9">
+    <div className="w-full h-full flex flex-col gap-9">
       <Contents />
     </div>
   );
