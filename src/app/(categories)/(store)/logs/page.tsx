@@ -54,7 +54,7 @@ const logs: Log[] = [
 
 export default function Logs() {
   return (
-    <div className="p-8 ml-6 flex flex-col gap-8 w-full">
+    <div className="p-8 flex flex-col gap-8 w-full">
       <h1 className="text-3xl font-bold">Kayıtlar</h1>
 
       <div className="w-full space-y-2">
