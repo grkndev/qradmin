@@ -40,14 +40,16 @@ function MobileSideBar() {
       <SheetTrigger className="flex">
         <Icon name="AlignJustify" size={24} />
       </SheetTrigger>
-      <SheetContent side={"right"} >
+      <SheetContent side={"right"}>
         <SheetHeader>
           <SheetTitle>Yönetici Menüsü</SheetTitle>
           <SheetDescription className="">
             <Content />
           </SheetDescription>
           <SheetFooter>
-            <Button className="w-full" variant={"destructive"}>Çıkış Yap</Button>
+            <Button className="w-full" variant={"destructive"}>
+              Çıkış Yap
+            </Button>
           </SheetFooter>
         </SheetHeader>
       </SheetContent>
