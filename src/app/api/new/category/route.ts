@@ -27,11 +27,21 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+    const hasCategory = await Categories.findOne({ slug });
+    if (hasCategory) {
+      return NextResponse.json(
+        {
+          message: "Category already exists",
+          success: false,
+          error: "404 File",
+        },
+        { status: 400 }
+      );
+    }
 
     const buffer = Buffer.from(await file.arrayBuffer());
     const fileName = await uploadFile(buffer, file.name);
     await ConnectDatabase();
-    console.log(name, slug, fileName);
     await Categories.create({
       name,
       slug,

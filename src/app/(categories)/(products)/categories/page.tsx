@@ -1,11 +1,18 @@
+"use client";
 import CategoriesList from "@/components/Categories/CategoriesList";
 import React from "react";
 
-export default async function Categories() {
-  const res = await fetch(`http://localhost:3000/api/get/categories`, {
-    cache: "no-store",
-  });
-  const { categories } = await res.json();
+export default function Categories() {
+
+  const [categories, setCategories] = React.useState<any[]>([]);
+  React.useEffect(() => {
+    fetch(`/api/get/categories`)
+      .then((res) => res.json())
+      .then((data) => {
+        setCategories(data.categories);
+      });
+  }, []);
+
   return (
     <div className="m-4">
       <div className="flex flex-col justify-start items-start w-full">

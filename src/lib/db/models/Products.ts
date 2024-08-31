@@ -5,7 +5,7 @@ export interface IProduct extends mongoose.Document {
   description: string;
   image: string;
   parent: string;
-  price: number;
+  price: string;
   createdAt: Date;
 }
 
@@ -27,7 +27,7 @@ const ProductSchema = new mongoose.Schema<IProduct>({
     required: [true, "Please provide a Parent"],
   },
   price: {
-    type: Number,
+    type: String,
     required: [true, "Please provide a Price"],
   },
   createdAt: {

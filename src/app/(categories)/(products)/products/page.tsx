@@ -27,8 +27,18 @@ import { useToast } from "@/components/ui/use-toast";
 import { IsLoading } from "@/components/Categories/CategoriesList";
 import DemoTable from "@/components/Products/Products";
 import { PopoverClose } from "@radix-ui/react-popover";
+import { set } from "mongoose";
 
 export default function ProductsSettings() {
+  const [categories, setCategories] = useState<Category[]>([]);
+  React.useEffect(() => {
+    fetch(`http://localhost:3000/api/get/categories`)
+      .then((res) => res.json())
+      .then((data) => {
+        setCategories(data.categories);
+      });
+  }, []);
+
   return (
     <div className="p-8 w-full h-full">
       <div className="flex flex-col justify-start items-start w-full">
@@ -45,7 +55,7 @@ export default function ProductsSettings() {
               <DialogTitle>Yeni ürün ekle</DialogTitle>
               {/* DialogDescription must be 'div'  */}
               <DialogDescription asChild>
-                <NewProductAdd />
+                <NewProductAdd categories={categories} />
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
@@ -61,42 +71,65 @@ export type Product = {
   name: string;
   price: string;
   image: File;
-  categoryId: string;
   desc: string;
-  createdAt: Date;
+  parent: string;
 };
 
-const categories = [
-  {
-    _id: "66129b58fa590dc6e12be320",
-    name: "Sıcak İçecekler",
-    slug: "sicak-icecekler",
-  },
-  {
-    _id: "66129c9efa590dc6e12be328",
-    name: "Pizzalar",
-    slug: "pizzalar",
-  },
-  {
-    _id: "66163975addf71f703dcd9f9",
-    name: "Waffle & Pasta",
-    slug: "waffle-&-pasta",
-  },
-];
-export type Category = { name: string; _id: string; slug?: string };
-function NewProductAdd() {
+export type Category = { name: string; slug: string };
+function NewProductAdd({ categories }: { categories: any }) {
   const { toast } = useToast();
   const [product, setProduct] = useState<Partial<Product>>();
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<Category>();
+  const [selectedCategory, setSelectedCategory] = useState<Category>(
+    categories[0]
+  );
   const [filtredCategory, setFiltredCategory] =
     useState<Category[]>(categories);
 
   async function newProduct() {
+    if (
+      !product ||
+      !product.name ||
+      !product.price ||
+      !product.desc ||
+      !product.image
+    ) {
+      toast({
+        title: "Ürün eklenemedi",
+        description: "Lütfen tüm alanları doldurun.",
+        variant: "destructive",
+      });
+      return;
+    }
+    const formData = new FormData();
+    formData.append("name", product.name);
+    formData.append("price", product.price);
+    formData.append("description", product.desc);
+    formData.append("image", product.image);
+    formData.append("parent", selectedCategory.slug);
+
+    setIsLoading(true);
+    const res = await fetch(`http://localhost:3000/api/new/product`, {
+      method: "POST",
+      body: formData,
+    });
+    const data = await res.json();
+    setIsLoading(false);
+    if (!data.success) {
+      toast({
+        title: "Ürün eklenemedi",
+        description: data.message,
+        variant: "destructive",
+      });
+      return;
+    }
     toast({
       title: "Ürün başarıyla eklendi",
       description: "Yeni ürün kaydedildi.",
     });
+    setProduct({});
+    setOpen(false);
+    setSelectedCategory(categories[0]);
   }
   const [open, setOpen] = useState(false);
   return (
@@ -113,7 +146,10 @@ function NewProductAdd() {
           </div>
           <div className="flex flex-col items-start gap-y-1">
             <span>
-              Ürün Açıklaması <span className="text-[10px] text-zinc-500">({product?.desc?.length||0} / 120)</span>
+              Ürün Açıklaması{" "}
+              <span className="text-[10px] text-zinc-500">
+                ({product?.desc?.length || 0} / 120)
+              </span>
             </span>
             <Textarea
               maxLength={120}
@@ -157,7 +193,7 @@ function NewProductAdd() {
                   className="mb-2"
                   onChange={(e) => {
                     setFiltredCategory(
-                      categories?.filter((x) =>
+                      categories?.filter((x: any) =>
                         x.name
                           .toLowerCase()
                           .includes(e.target.value.toLowerCase())
@@ -168,7 +204,7 @@ function NewProductAdd() {
                 {filtredCategory?.map((category) => (
                   <Label
                     className="hover:bg-zinc-200 w-full flex p-2 rounded"
-                    key={category._id}
+                    key={category.slug}
                     // value={framework.value}
                     onClick={() => {
                       setSelectedCategory(category);
@@ -179,7 +215,7 @@ function NewProductAdd() {
                     <CheckIcon
                       className={cn(
                         "ml-auto h-4 w-4",
-                        selectedCategory?._id === category._id
+                        selectedCategory?.slug === category.slug
                           ? "opacity-100"
                           : "opacity-0"
                       )}
@@ -208,6 +244,7 @@ function NewProductAdd() {
             >
               <input
                 id="dropzone-file"
+                disabled={isLoading}
                 accept="image/png, image/jpeg"
                 type="file"
                 onChange={(e) => {
@@ -223,17 +260,15 @@ function NewProductAdd() {
         </div>
       </div>
       <div>
-        <DialogClose asChild>
-          <Button
-            className="w-full mt-4 disabled:opacity-50"
-            disabled={isLoading}
-            onClick={() => {
-              newProduct();
-            }}
-          >
-            {isLoading ? <IsLoading /> : <span>Oluştur</span>}
-          </Button>
-        </DialogClose>
+        <Button
+          className="w-full mt-4 disabled:opacity-50"
+          disabled={isLoading}
+          onClick={() => {
+            newProduct();
+          }}
+        >
+          {isLoading ? <IsLoading /> : <span>Oluştur</span>}
+        </Button>
       </div>
     </div>
   );

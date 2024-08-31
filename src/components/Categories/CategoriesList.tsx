@@ -32,26 +32,7 @@ type Category = {
   image: any;
   slug: string;
 };
-const categories: Category[] = [
-  {
-    _id: "66129b58fa590dc6e12be320",
-    name: "Sıcak İçecekler",
-    image: "https://i.ibb.co/LN7qrkF/4bf01ecf68dd.jpg",
-    slug: "sicak-icecekler",
-  },
-  {
-    _id: "66129c9efa590dc6e12be328",
-    name: "Pizzalar",
-    image: "https://i.ibb.co/cYmRJMR/9bedffa64e52.jpg",
-    slug: "pizzalar",
-  },
-  {
-    _id: "66163975addf71f703dcd9f9",
-    name: "Waffle & Pasta",
-    image: "https://i.ibb.co/3v70CL9/928de99ecefa.jpg",
-    slug: "waffle-&-pasta",
-  },
-];
+
 export default function CategoriesList({
   categories,
 }: {
