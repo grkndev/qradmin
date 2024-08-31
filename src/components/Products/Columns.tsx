@@ -14,7 +14,7 @@ export type Product = {
   createdAt: Date;
   productId: string;
   categoryName: string;
-  categoryId: string;
+  parent: string;
 };
 
 export const columns: ColumnDef<Product>[] = [

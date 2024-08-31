@@ -48,6 +48,7 @@ export async function POST(request: Request) {
       name,
       description,
       parent,
+      categoryName: hasParent.name,
       price,
       image: `https://cdnqrmenu.s3.eu-west-1.amazonaws.com/${fileName}`,
       createdAt: Date.now(),

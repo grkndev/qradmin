@@ -86,11 +86,11 @@ export default function Proccess({ product }: { product: Product }) {
       <Dialog key={product.productId}>
         <DialogTrigger asChild>
           <Button
-          className="w-full"
+            className="w-full"
             onClick={() => {
               setEditedProduct(product);
               setSelectedCategory({
-                _id: product.categoryId,
+                slug: product.parent,
                 name: product.categoryName,
               });
             }}
@@ -196,7 +196,7 @@ export default function Proccess({ product }: { product: Product }) {
                   {filtredCategory?.map((category) => (
                     <Label
                       className="hover:bg-zinc-200 w-full flex p-2 rounded"
-                      key={category._id}
+                      key={category.slug}
                       // value={framework.value}
                       onClick={() => {
                         setSelectedCategory(category);
@@ -207,7 +207,7 @@ export default function Proccess({ product }: { product: Product }) {
                       <CheckIcon
                         className={cn(
                           "ml-auto h-4 w-4",
-                          selectedCategory?._id === category._id
+                          selectedCategory?.slug === category.slug
                             ? "opacity-100"
                             : "opacity-0"
                         )}
