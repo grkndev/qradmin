@@ -1,4 +1,4 @@
-export default [
+const data = [
   {
     category: "Anasayfa",
     items: [
@@ -58,3 +58,4 @@ export default [
     ],
   },
 ];
+export default data;

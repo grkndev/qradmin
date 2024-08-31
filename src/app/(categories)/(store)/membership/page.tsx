@@ -27,11 +27,11 @@ const user: UserType = {
 };
 export default function Analyses() {
   return (
-    <div className="p-6 w-full flex flex-col gap-y-10 h-full">
+    <div className="p-6 w-full flex flex-col gap-y-10 h-full  max-w-2xl">
       <User user={user} />
 
       <div className="w-full flex flex-col items-start justify-start">
-        <div className="flex flex-row justify-between items-center w-full">
+        <div className="flex flex-row justify-between items-center w-full border-b">
           <div><h1 className="font-bold text-xl">Şirket Profili</h1>
           <p className="text-gray-500 text-sm">
             Şirket bilgilerinizi güncelleyebilirsiniz.

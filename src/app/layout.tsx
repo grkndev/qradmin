@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en h-full ">
+    <html lang="en h-full w-full">
       <body
         className={cn(montserrat.className, "flex flex-col sm:flex-row h-full")}
       >
@@ -30,7 +30,7 @@ export default function RootLayout({
         >
           <SideBar />
 
-          <main>{children}</main>
+          <main className="w-full">{children}</main>
         </ThemeProvider>
       </body>
     </html>

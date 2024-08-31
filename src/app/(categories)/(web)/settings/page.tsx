@@ -18,18 +18,18 @@ export default function Settings() {
         </div>
         <div className="grid w-full max-w-2xl items-center gap-1.5">
           <Label htmlFor="instagram">Instagram adresi</Label>
-          <Input type="text" id="instagram" className="w-full" placeholder="@mystore" />
+          <Input type="text" id="instagram" className="w-full" placeholder="instagram.com/mystore" />
         </div>
         <div className="grid w-full max-w-2xl items-center gap-1.5">
           <Label htmlFor="facebook">Facebook adresi</Label>
-          <Input type="text" id="facebook" className="w-full" placeholder="@mystore" />
+          <Input type="text" id="facebook" className="w-full" placeholder="facebook.com/@mystore" />
         </div>
         <div className="grid w-full max-w-2xl items-center gap-1.5">
           <Label htmlFor="x (twitter)">X (Twitter) Adresi</Label>
-          <Input type="text" id="x" className="w-full" placeholder="@mystore" />
+          <Input type="text" id="x" className="w-full" placeholder="x.com/mystore" />
         </div>
       </div>
-      <Button className="w-full">Kaydet</Button>
+      <Button className="w-full max-w-2xl">Kaydet</Button>
     </div>
   );
 }
