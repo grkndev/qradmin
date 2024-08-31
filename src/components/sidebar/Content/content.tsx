@@ -47,7 +47,7 @@ function Contents() {
                 />
               }
               title={item.title}
-              color="text-black dark:text-zinc-200"
+              color={`text-black dark:text-zinc-200`}
               href={item.href}
             />
           ))}

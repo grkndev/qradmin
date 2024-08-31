@@ -52,7 +52,11 @@ const categories: Category[] = [
     slug: "waffle-&-pasta",
   },
 ];
-export default function CategoriesList() {
+export default function CategoriesList({
+  categories,
+}: {
+  categories: Category[];
+}) {
   const [newCategory, setNewCategory] = useState<Partial<Category>>();
   const [editCategory, setEditCategory] = useState<Partial<Category>>();
 
@@ -75,6 +79,18 @@ export default function CategoriesList() {
   const [dialogHasOpen, setDialogOpen] = useState(false);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    const fileSize = (newCategory?.image as File)?.size;
+    //MAX FILE SIZE MUST BE 2MB
+    if (fileSize && fileSize > 2 * 1024 * 1024) {
+      toast({
+        title: "Dosya boyutu çok büyük",
+        description: "Dosya boyutu en fazla 2MB olmalıdır.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const formData = new FormData();
     formData.append("name", newCategory?.name || "");
     formData.append("slug", newCategory?.slug || "");
@@ -86,6 +102,15 @@ export default function CategoriesList() {
       body: formData,
     });
     const data = await res.json();
+    if (data.success === false) {
+      toast({
+        title: "Kategori oluşturulamadı",
+        description: data.message,
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
     setNewCategory({});
     toast({
       title: "Kategori oluşturuldu",
@@ -184,6 +209,7 @@ export default function CategoriesList() {
                   Kategori resmi<p className="inline text-red-600">*</p>
                 </Label>
                 <Input
+                  disabled={isLoading}
                   onChange={(e) => {
                     if (!e.target.files) return;
                     setNewCategory({
