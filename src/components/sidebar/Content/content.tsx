@@ -5,11 +5,28 @@ import Label from "./Label/label";
 import Icon from "@/components/Icon";
 import contents from "./contents";
 import { usePathname } from "next/navigation";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
 export default function Content() {
+  return (
+    <div className="w-full h-full flex flex-col gap-9">
+      <Contents />
+    </div>
+  );
+}
+
+function Contents() {
   const pathName = usePathname();
   const ids = useId();
   return (
-    <div className="w-full h-full flex flex-col gap-9">
+    <div>
       {contents.map((content: any) => (
         <div key={ids} className="flex flex-col gap-2 my-4">
           <Label title={content.category} />
