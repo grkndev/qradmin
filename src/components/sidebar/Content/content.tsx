@@ -27,12 +27,15 @@ function Contents() {
   const ids = useId();
   return (
     <div>
-      {contents.map((content: any) => (
-        <div key={ids} className="flex flex-col gap-2 my-4">
+      {contents.map((content: any, index: number) => (
+        <div
+          key={`${Math.random()}-${index}`}
+          className="flex flex-col gap-2 my-4"
+        >
           <Label title={content.category} />
-          {content.items.map((item: any) => (
+          {content.items.map((item: any, index: number) => (
             <ContentButton
-              key={item.href}
+              key={`${Math.random()}-${index}`}
               className={`${
                 pathName === item.href ? "bg-cafe-200 dark:bg-cafe-950" : ""
               }`}

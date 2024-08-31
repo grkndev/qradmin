@@ -27,7 +27,7 @@ export default function SideBar() {
       </div>
       <div className="hidden bg-[#F1F1F1] dark:bg-[#0E0E0E]   flex-col items-center justify-between h-screen px-6 py-4 sm:flex">
         <Head />
-        <Content />
+        <Content key={"desktop"} />
         <Footer />
       </div>
     </div>
@@ -44,7 +44,7 @@ function MobileSideBar() {
         <SheetHeader>
           <SheetTitle>Yönetici Menüsü</SheetTitle>
           <SheetDescription className="">
-            <Content />
+            <Content key={"mobile"} />
           </SheetDescription>
           <SheetFooter>
             <Button className="w-full" variant={"destructive"}>

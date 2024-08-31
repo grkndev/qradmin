@@ -53,7 +53,6 @@ const categories: Category[] = [
   },
 ];
 export default function CategoriesList() {
-
   const [newCategory, setNewCategory] = useState<Partial<Category>>();
   const [editCategory, setEditCategory] = useState<Partial<Category>>();
 
@@ -73,14 +72,30 @@ export default function CategoriesList() {
   }
 
   const [isLoading, setIsLoading] = useState(false);
+  const [dialogHasOpen, setDialogOpen] = useState(false);
   const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", newCategory?.name || "");
+    formData.append("slug", newCategory?.slug || "");
+    formData.append("image", newCategory?.image || "");
+    setIsLoading(true);
+
+    const res = await fetch("/api/new/category", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await res.json();
+    setNewCategory({});
     toast({
       title: "Kategori oluşturuldu",
       description: "Yeni kategori başarıyla oluşturuldu",
       tw: "bg-green-500 text-white",
     });
+    setIsLoading(false);
+    setDialogOpen(false);
   };
- 
+
   return (
     <div className="my-4 flex sm:flex-row  flex-col flex-wrap justify-start sm:justify-start  items-start">
       {categories.length === 0 && (
@@ -93,8 +108,8 @@ export default function CategoriesList() {
           ))}
         </div>
       )}
-      <div className="grid sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 grid-cols-2 gap-4">
-        <Dialog>
+      <div className="grid md:grid-cols-3 lg:grid-cols-4 grid-cols-2 gap-4">
+        <Dialog open={dialogHasOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
             <Button
               variant="outline"
@@ -207,7 +222,6 @@ export default function CategoriesList() {
                   setEditCategory(category);
                 }}
                 key={category._id}
-                // href={`/category/${category.slug}`}
                 className="cursor-pointer overflow-hidden w-[150px] h-[150px] justify-center items-center bg-cover flex  rounded-2xl"
                 style={{
                   backgroundRepeat: "no-repeat",
@@ -217,7 +231,7 @@ export default function CategoriesList() {
                 <h2 className=" text-white  z-10 text-xl font-bold text-center">
                   {category.name}
                 </h2>
-                <div className="w-[150px] h-[150px]  z-1 absolute bg-gradient-to-t from-content rounded-2xl" />
+                <div className="w-[150px] h-[150px]  z-1 absolute bg-gradient-to-t from-cafe-800 rounded-2xl" />
               </div>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[475px] outline-none">

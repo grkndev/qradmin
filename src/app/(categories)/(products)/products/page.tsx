@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -25,6 +26,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { IsLoading } from "@/components/Categories/CategoriesList";
 import DemoTable from "@/components/Products/Products";
+import { PopoverClose } from "@radix-ui/react-popover";
 
 export default function ProductsSettings() {
   return (
@@ -101,7 +103,7 @@ function NewProductAdd() {
     <div className=" w-full ">
       <div className="flex flex-col sm:flex-row gap-2 gap-x-16">
         <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-x-4">
+          <div className="flex flex-col items-start gap-y-1">
             <span>Ürün adı</span>
             <Input
               onChange={(e) => setProduct({ ...product, name: e.target.value })}
@@ -109,16 +111,19 @@ function NewProductAdd() {
               className="w-full"
             />
           </div>
-          <div className="flex items-center gap-x-4">
-            <span>Ürün Açıklaması</span>
+          <div className="flex flex-col items-start gap-y-1">
+            <span>
+              Ürün Açıklaması <span className="text-[10px] text-zinc-500">({product?.desc?.length||0} / 120)</span>
+            </span>
             <Textarea
+              maxLength={120}
               value={product?.desc}
               onChange={(e) => setProduct({ ...product, desc: e.target.value })}
               placeholder="Ürün Açıklaması"
               className="w-full"
             />
           </div>
-          <div className="flex items-center gap-x-4">
+          <div className="flex flex-col items-start gap-y-1">
             <p>Ürün Fiyatı</p>
             <div className="flex items-center w-full">
               <Input
@@ -132,7 +137,7 @@ function NewProductAdd() {
               <span className="ml-1">TL</span>
             </div>
           </div>
-          <div className="flex items-center gap-x-4">
+          <div className="flex flex-col items-start gap-y-1">
             <span>Ürün Kategorisi</span>
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
@@ -218,15 +223,17 @@ function NewProductAdd() {
         </div>
       </div>
       <div>
-        <Button
-          className="w-full mt-4 disabled:opacity-50"
-          disabled={isLoading}
-          onClick={() => {
-            newProduct();
-          }}
-        >
-          {isLoading ? <IsLoading /> : <span>Oluştur</span>}
-        </Button>
+        <DialogClose asChild>
+          <Button
+            className="w-full mt-4 disabled:opacity-50"
+            disabled={isLoading}
+            onClick={() => {
+              newProduct();
+            }}
+          >
+            {isLoading ? <IsLoading /> : <span>Oluştur</span>}
+          </Button>
+        </DialogClose>
       </div>
     </div>
   );
