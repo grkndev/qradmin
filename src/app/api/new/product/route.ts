@@ -4,6 +4,7 @@ import ConnectDatabase from "@/lib/db/Client";
 import Products from "@/lib/db/models/Products";
 import { description } from "@/components/Analytics/chart";
 import Categories from "@/lib/db/models/Categories";
+import snowflake from "@/lib/useId";
 
 export async function POST(request: Request) {
   try {
@@ -45,6 +46,7 @@ export async function POST(request: Request) {
     const fileName = await uploadFile(buffer, file.name, parent);
     console.log(name, description, fileName);
     await Products.create({
+      productId: snowflake.create().toString(),
       name,
       description,
       parent,

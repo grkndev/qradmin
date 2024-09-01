@@ -26,13 +26,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { IsLoading } from "@/components/Categories/CategoriesList";
 import DemoTable from "@/components/Products/Products";
-import { PopoverClose } from "@radix-ui/react-popover";
-import { set } from "mongoose";
 
 export default function ProductsSettings() {
   const [categories, setCategories] = useState<Category[]>([]);
   React.useEffect(() => {
-    fetch(`http://localhost:3000/api/get/categories`)
+    fetch(`/api/get/categories`)
       .then((res) => res.json())
       .then((data) => {
         setCategories(data.categories);
@@ -109,7 +107,7 @@ function NewProductAdd({ categories }: { categories: any }) {
     formData.append("parent", selectedCategory.slug);
 
     setIsLoading(true);
-    const res = await fetch(`http://localhost:3000/api/new/product`, {
+    const res = await fetch(`/api/new/product`, {
       method: "POST",
       body: formData,
     });
@@ -146,7 +144,7 @@ function NewProductAdd({ categories }: { categories: any }) {
           </div>
           <div className="flex flex-col items-start gap-y-1">
             <span>
-              Ürün Açıklaması{" "}
+              Ürün Açıklaması
               <span className="text-[10px] text-zinc-500">
                 ({product?.desc?.length || 0} / 120)
               </span>

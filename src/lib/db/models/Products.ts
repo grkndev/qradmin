@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 export interface IProduct extends mongoose.Document {
+  productId: string;
   name: string;
   description: string;
   image: string;
@@ -10,6 +11,10 @@ export interface IProduct extends mongoose.Document {
 }
 
 const ProductSchema = new mongoose.Schema<IProduct>({
+  productId: {
+    type: String,
+    required: [true, "Please provide a Product ID."],
+  },
   name: {
     type: String,
     required: [true, "Please provide a name."],

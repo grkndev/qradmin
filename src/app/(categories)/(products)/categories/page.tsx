@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Categories() {
 
-  const [categories, setCategories] = React.useState<any[]>([]);
+  const [categories, setCategories] = React.useState();
   React.useEffect(() => {
     fetch(`/api/get/categories`)
       .then((res) => res.json())

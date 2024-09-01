@@ -2,6 +2,7 @@ import { uploadFile } from "@/lib/s3Client";
 import { NextResponse } from "next/server";
 import ConnectDatabase from "@/lib/db/Client";
 import Categories from "@/lib/db/models/Categories";
+import snowflake from "@/lib/useId";
 
 export async function POST(request: Request) {
   try {
@@ -43,6 +44,7 @@ export async function POST(request: Request) {
     const fileName = await uploadFile(buffer, file.name);
     await ConnectDatabase();
     await Categories.create({
+      categoryId: snowflake.create().toString(),
       name,
       slug,
       image: `https://cdnqrmenu.s3.eu-west-1.amazonaws.com/${fileName}`,

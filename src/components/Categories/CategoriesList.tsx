@@ -26,17 +26,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
+import axios from "axios";
 type Category = {
-  _id: string;
+  categoryId: string;
   name: string;
   image: any;
   slug: string;
 };
 
 export default function CategoriesList({
-  categories,
+  categories = null,
 }: {
-  categories: Category[];
+  categories: Category[] | any;
 }) {
   const [newCategory, setNewCategory] = useState<Partial<Category>>();
   const [editCategory, setEditCategory] = useState<Partial<Category>>();
@@ -44,6 +45,21 @@ export default function CategoriesList({
   const { toast } = useToast();
 
   async function handleDelete() {
+    console.log(editCategory?.categoryId)
+    const { data } = await axios.delete("/api/delete/category", {
+      data: {
+        categoryId: editCategory?.categoryId,
+      },
+    });
+    if (data.success === false) {
+      toast({
+        title: "Kategori silinemedi",
+        description: data.message,
+        variant: "destructive",
+      });
+      return;
+    }
+    setEditCategory({});
     toast({
       title: "Kategori silindi",
       description: "Kategori",
@@ -101,19 +117,17 @@ export default function CategoriesList({
     setIsLoading(false);
     setDialogOpen(false);
   };
-
-  return (
+  return !categories ? (
+    <div className="grid sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-5 grid-cols-2 gap-4">
+      {[1, 2, 3, 4].map((e) => (
+        <Skeleton
+          key={e.toString()}
+          className="w-[150px] h-[150px] rounded-rounded-2xl"
+        />
+      ))}
+    </div>
+  ) : (
     <div className="my-4 flex sm:flex-row  flex-col flex-wrap justify-start sm:justify-start  items-start">
-      {categories.length === 0 && (
-        <div className="grid sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-5 grid-cols-2 gap-4">
-          {[1, 2, 3, 4].map((e) => (
-            <Skeleton
-              key={e.toString()}
-              className="w-[150px] h-[150px] rounded-rounded-2xl"
-            />
-          ))}
-        </div>
-      )}
       <div className="grid md:grid-cols-3 lg:grid-cols-4 grid-cols-2 gap-4">
         <Dialog open={dialogHasOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
@@ -221,14 +235,14 @@ export default function CategoriesList({
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        {categories.map((category) => (
-          <Dialog key={category._id}>
+        {(categories as Category[]).map((category) => (
+          <Dialog key={category.categoryId}>
             <DialogTrigger asChild>
               <div
                 onClick={() => {
                   setEditCategory(category);
                 }}
-                key={category._id}
+                key={category.categoryId}
                 className="cursor-pointer overflow-hidden w-[150px] h-[150px] justify-center items-center bg-cover flex  rounded-2xl"
                 style={{
                   backgroundRepeat: "no-repeat",
@@ -324,7 +338,7 @@ export default function CategoriesList({
                   {isLoading ? <IsLoading /> : <p>Kaydet</p>}
                 </Button>
 
-                <AlertDialog key={category._id.toString() + "-delete"}>
+                <AlertDialog key={category.categoryId + "-delete"}>
                   <AlertDialogTrigger>
                     <Button className="w-full mb-2" variant={"destructive"}>
                       Sil

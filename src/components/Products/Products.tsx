@@ -5,7 +5,7 @@ import { DataTable } from "./DataTable";
 export default function DemoTable() {
   const [data, setData] = React.useState<Product[]>([]);
   React.useEffect(() => {
-    fetch(`http://localhost:3000/api/get/products`)
+    fetch(`/api/get/products`)
       .then((res) => res.json())
       .then((data) => {
         setData(data.data);

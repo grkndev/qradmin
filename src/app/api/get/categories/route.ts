@@ -5,7 +5,7 @@ import Categories from "@/lib/db/models/Categories";
 export async function GET() {
   try {
     await ConnectDatabase();
-    const categories = await Categories.find({}, "name slug image");
+    const categories = await Categories.find({}, "name slug image categoryId");
     return NextResponse.json(
       { categories, success: true, error: null },
       { status: 200 }

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 export interface Categories extends mongoose.Document {
+  categoryId: string;
   name: string;
   image: string;
   slug: string;
@@ -8,6 +9,10 @@ export interface Categories extends mongoose.Document {
 }
 
 const Categories = new mongoose.Schema<Categories>({
+  categoryId: {
+    type: String,
+    required: [true, "Please provide a Category ID."],
+  },
   name: {
     type: String,
     required: [true, "Please provide a name."],

@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     await ConnectDatabase();
     const products = await Products.find(
       {},
-      "name price image parent categoryName description"
+      "name price productId image parent categoryName description"
     );
     return NextResponse.json({ data: products }, { status: 200 });
   } catch (e: any) {
