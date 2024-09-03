@@ -6,7 +6,7 @@ export const dynamic = 'force-static'
 export async function GET() {
   try {
     await ConnectDatabase();
-    const categories = await Categories.find({}, "name slug image categoryId");
+    const categories = await Categories.find({}, "name slug image categoryId").exec();
     return NextResponse.json(
       { categories, success: true, error: null },
       { status: 200 }

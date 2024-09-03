@@ -34,18 +34,20 @@ type Category = {
   slug: string;
 };
 
-export default function CategoriesList({
-  categories = null,
-}: {
-  categories: Category[] | any;
-}) {
+export default function CategoriesList() {
+  const [categories, setCategories] = useState<Category[] | null>(null);
   const [newCategory, setNewCategory] = useState<Partial<Category>>();
   const [editCategory, setEditCategory] = useState<Partial<Category>>();
 
   const { toast } = useToast();
+  React.useEffect(() => {
+    axios.get("/api/get/categories").then((res) => {
+      setCategories(res.data.categories);
+    });
+  }, []);
 
   async function handleDelete() {
-    console.log(editCategory?.categoryId)
+    console.log(editCategory?.categoryId);
     const { data } = await axios.delete("/api/delete/category", {
       data: {
         categoryId: editCategory?.categoryId,
