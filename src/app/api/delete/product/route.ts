@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-
+import clientPromise from "@/lib/db/Client";
 export async function DELETE(req: Request, res: Response) {
   try {
     const { productId } = await req.json();

@@ -47,8 +47,18 @@ export async function POST(request: Request) {
 
     const buffer = Buffer.from(await file.arrayBuffer());
     const fileName = await uploadFile(buffer, file.name, parent);
-    console.log(name, description, fileName);
-    await Products.create({
+    // console.log(name, description, fileName);
+    // await Products.create({
+    //   productId: snowflake.create().toString(),
+    //   name,
+    //   description,
+    //   parent,
+    //   categoryName: hasParent.name,
+    //   price,
+    //   image: `https://cdnqrmenu.s3.eu-west-1.amazonaws.com/${fileName}`,
+    //   createdAt: Date.now(),
+    // });
+    await db.collection("products").insertOne({
       productId: snowflake.create().toString(),
       name,
       description,
@@ -56,7 +66,7 @@ export async function POST(request: Request) {
       categoryName: hasParent.name,
       price,
       image: `https://cdnqrmenu.s3.eu-west-1.amazonaws.com/${fileName}`,
-      createdAt: Date.now(),
+      createdAt: Date.now,
     });
 
     return NextResponse.json(

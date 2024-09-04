@@ -1,8 +1,9 @@
 import { uploadFile } from "@/lib/s3Client";
 import { NextResponse } from "next/server";
-import ConnectDatabase from "@/lib/db/Client";
+import ConnectDatabase from "@/lib/db/OldClient";
 import Categories from "@/lib/db/models/Categories";
 import snowflake from "@/lib/useId";
+import clientPromise from "@/lib/db/Client";
 
 export async function POST(request: Request) {
   try {
@@ -28,7 +29,10 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    const hasCategory = await Categories.findOne({ slug });
+    const client = await clientPromise;
+    const db = client.db("menu");
+    // const hasCategory = await Categories.findOne({ slug });
+    const hasCategory = await db.collection("categories").findOne({ slug });
     if (hasCategory) {
       return NextResponse.json(
         {
@@ -42,8 +46,15 @@ export async function POST(request: Request) {
 
     const buffer = Buffer.from(await file.arrayBuffer());
     const fileName = await uploadFile(buffer, file.name);
-    await ConnectDatabase();
-    await Categories.create({
+    // await ConnectDatabase();
+    // await Categories.create({
+    //   categoryId: snowflake.create().toString(),
+    //   name,
+    //   slug,
+    //   image: `https://cdnqrmenu.s3.eu-west-1.amazonaws.com/${fileName}`,
+    //   date: Date.now(),
+    // });
+    await db.collection("categories").insertOne({
       categoryId: snowflake.create().toString(),
       name,
       slug,
