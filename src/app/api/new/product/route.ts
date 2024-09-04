@@ -1,10 +1,10 @@
 import { uploadFile } from "@/lib/s3Client";
 import { NextResponse } from "next/server";
-import ConnectDatabase from "@/lib/db/Client";
 import Products from "@/lib/db/models/Products";
 import { description } from "@/components/Analytics/chart";
 import Categories from "@/lib/db/models/Categories";
 import snowflake from "@/lib/useId";
+import clientPromise from "@/lib/db/Client";
 
 export async function POST(request: Request) {
   try {
@@ -33,8 +33,11 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    await ConnectDatabase();
-    const hasParent = await Categories.findOne({ slug: parent });
+    const client = await clientPromise;
+    const db = client.db("menu");
+    const hasParent = await db
+      .collection("categories")
+      .findOne({ slug: parent });
     if (!hasParent) {
       return NextResponse.json(
         { message: "Category not found", success: false, error: "404 File" },

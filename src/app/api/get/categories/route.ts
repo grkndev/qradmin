@@ -1,20 +1,15 @@
 import { NextResponse } from "next/server";
-import ConnectDatabase from "@/lib/db/Client";
-import Categories from "@/lib/db/models/Categories";
+import clientPromise from "@/lib/db/Client";
 
-export const dynamic = 'force-static'
 export async function GET() {
   try {
-    await ConnectDatabase();
-    const categories = await Categories.find({}, "name slug image categoryId").exec();
-    return NextResponse.json(
-      { categories, success: true, error: null },
-      { status: 200 }
-    );
-  } catch (error: any) {
-    return NextResponse.json(
-      { message: error.message, success: false, error },
-      { status: 500 }
-    );
+    const client = await clientPromise;
+    const db = client.db("menu");
+    const categories = await db.collection("categories").find({}).toArray();
+    return NextResponse.json({ categories, success: true, error: null });
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

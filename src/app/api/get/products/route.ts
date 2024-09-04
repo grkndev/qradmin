@@ -1,15 +1,10 @@
-import ConnectDatabase from "@/lib/db/Client";
-import Products from "@/lib/db/models/Products";
 import { NextResponse, NextRequest } from "next/server";
-import type { NextApiRequest, NextApiResponse } from "next";
-
+import clientPromise from "@/lib/db/Client";
 export async function GET(request: NextRequest) {
   try {
-    await ConnectDatabase();
-    const products = await Products.find(
-      {},
-      "name price productId image parent categoryName description"
-    );
+    const client = await clientPromise;
+    const db = client.db("menu");
+    const products = await db.collection("products").find({}).toArray();
     return NextResponse.json({ data: products }, { status: 200 });
   } catch (e: any) {
     return NextResponse.json(
@@ -23,11 +18,10 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const { parent } = body;
   try {
-    await ConnectDatabase();
-    const products = parent
-      ? await Products.find({ parent: parent }, "name price image categoryName parent")
-      : await Products.find({}, "name price image parent categoryName description");
-    console.log(products);
+    const client = await clientPromise;
+    const db = client.db("menu");
+    const products = await db.collection("products").find({ parent }).toArray();
+
     return NextResponse.json({ data: products }, { status: 200 });
   } catch (e: any) {
     return NextResponse.json(
