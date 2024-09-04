@@ -5,7 +5,15 @@ export async function GET(request: NextRequest) {
     const client = await clientPromise;
     const db = client.db("menu");
     const products = await db.collection("products").find({}).toArray();
-    return NextResponse.json({ data: products }, { status: 200 });
+    return NextResponse.json(
+      { data: products },
+      {
+        status: 200,
+        headers: {
+          "Cache-Control": "no-store, max-age=0",
+        },
+      }
+    );
   } catch (e: any) {
     return NextResponse.json(
       { success: false, message: e.message },
