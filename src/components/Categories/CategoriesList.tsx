@@ -33,23 +33,24 @@ type Category = {
   image: any;
   slug: string;
 };
-
+export const revalidate = 10;
+export const dynamicParams = true;
 export default function CategoriesList() {
   const [categories, setCategories] = useState<Category[] | null>(null);
   const [newCategory, setNewCategory] = useState<Partial<Category>>();
   const [editCategory, setEditCategory] = useState<Partial<Category>>();
+  const getCategories = async () => {
+    const { data } = await axios.get("/api/get/categories", {
+      headers: {
+        "Cache-Control": "no-store, max-age=0",
+      },
+    });
+    setCategories(data.categories);
+  };
 
   const { toast } = useToast();
   React.useEffect(() => {
-    axios
-      .get("/api/get/categories", {
-        headers: {
-          "Cache-Control": "no-store, max-age=0",
-        },
-      })
-      .then((res) => {
-        setCategories(res.data.categories);
-      });
+    getCategories();
   }, []);
 
   async function handleDelete() {

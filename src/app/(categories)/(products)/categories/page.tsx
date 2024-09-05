@@ -1,5 +1,7 @@
-
 import CategoriesList from "@/components/Categories/CategoriesList";
+export const revalidate = 10;
+export const dynamicParams = true;
+
 
 export default function Categories() {
 
