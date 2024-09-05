@@ -9,7 +9,7 @@ export default function DemoTable() {
     getProducts();
   }, []);
   const getProducts = async () => {
-    const { data } = await axios.get(`/api/get/products`, {
+    const { data } = await axios.get(`${process.env.API_URL}/api/get/products`, {
       headers: {
         "Cache-Control": "no-store, max-age=0",
       },

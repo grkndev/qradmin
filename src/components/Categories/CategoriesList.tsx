@@ -40,7 +40,7 @@ export default function CategoriesList() {
   const [newCategory, setNewCategory] = useState<Partial<Category>>();
   const [editCategory, setEditCategory] = useState<Partial<Category>>();
   const getCategories = async () => {
-    const { data } = await axios.get("/api/get/categories", {
+    const { data } = await axios.get(`/api/get/categories`, {
       headers: {
         "Cache-Control": "no-store, max-age=0",
       },
@@ -49,17 +49,21 @@ export default function CategoriesList() {
   };
 
   const { toast } = useToast();
+
   React.useEffect(() => {
     getCategories();
   }, []);
 
   async function handleDelete() {
     console.log(editCategory?.categoryId);
-    const { data } = await axios.delete("/api/delete/category", {
-      data: {
-        categoryId: editCategory?.categoryId,
-      },
-    });
+    const { data } = await axios.delete(
+      `/api/delete/category`,
+      {
+        data: {
+          categoryId: editCategory?.categoryId,
+        },
+      }
+    );
     if (data.success === false) {
       toast({
         title: "Kategori silinemedi",
@@ -103,7 +107,7 @@ export default function CategoriesList() {
     formData.append("image", newCategory?.image || "");
     setIsLoading(true);
 
-    const res = await fetch("/api/new/category", {
+    const res = await fetch(`/api/new/category`, {
       method: "POST",
       body: formData,
     });
