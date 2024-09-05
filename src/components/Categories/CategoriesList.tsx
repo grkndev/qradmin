@@ -41,9 +41,15 @@ export default function CategoriesList() {
 
   const { toast } = useToast();
   React.useEffect(() => {
-    axios.get("/api/get/categories").then((res) => {
-      setCategories(res.data.categories);
-    });
+    axios
+      .get("/api/get/categories", {
+        headers: {
+          "Cache-Control": "no-store, max-age=0",
+        },
+      })
+      .then((res) => {
+        setCategories(res.data.categories);
+      });
   }, []);
 
   async function handleDelete() {
