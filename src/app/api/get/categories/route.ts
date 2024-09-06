@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/db/Client";
-export const fetchCache = 'force-no-store';
+import { revalidatePath } from "next/cache";
+
 export async function GET() {
+  revalidatePath("/api/get/categories");
+  revalidatePath("/api/get/products");
+
   try {
     const client = await clientPromise;
     const db = client.db("menu");

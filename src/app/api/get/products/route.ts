@@ -1,7 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import clientPromise from "@/lib/db/Client";
 
-export const fetchCache = 'force-no-store';
 export async function GET(request: NextRequest) {
   try {
     const client = await clientPromise;

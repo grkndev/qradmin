@@ -40,11 +40,7 @@ export default function CategoriesList() {
   const [newCategory, setNewCategory] = useState<Partial<Category>>();
   const [editCategory, setEditCategory] = useState<Partial<Category>>();
   const getCategories = async () => {
-    const { data } = await axios.get(`/api/get/categories`, {
-      headers: {
-        "Cache-Control": "no-store, max-age=0",
-      },
-    });
+    const { data } = await axios.get(`/api/get/categories`);
     setCategories(data.categories);
   };
 
