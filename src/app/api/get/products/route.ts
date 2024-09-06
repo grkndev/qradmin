@@ -1,7 +1,9 @@
 import { NextResponse, NextRequest } from "next/server";
 import clientPromise from "@/lib/db/Client";
+import { revalidatePath } from "next/cache";
 
 export async function GET(request: NextRequest) {
+  revalidatePath("/api/get/products");
   try {
     const client = await clientPromise;
     const db = client.db("menu");

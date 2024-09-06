@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/db/Client";
+import { revalidatePath } from "next/cache";
+
 export async function DELETE(req: Request, res: Response) {
+  revalidatePath("/api/delete/products");
   try {
     const { productId } = await req.json();
     if (!productId) {

@@ -3,7 +3,10 @@
 import { deleteFile, deleteParent } from "@/lib/s3Client";
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/db/Client";
+import { revalidatePath } from "next/cache";
+
 export async function DELETE(request: Request) {
+  revalidatePath("/api/delete/categories");
   try {
     const { categoryId } = await request.json();
     const client = await clientPromise;

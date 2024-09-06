@@ -1,12 +1,11 @@
 import { uploadFile } from "@/lib/s3Client";
 import { NextResponse } from "next/server";
-import Products from "@/lib/db/models/Products";
-import { description } from "@/components/Analytics/chart";
-import Categories from "@/lib/db/models/Categories";
 import snowflake from "@/lib/useId";
 import clientPromise from "@/lib/db/Client";
+import { revalidatePath } from "next/cache";
 
 export async function POST(request: Request) {
+  revalidatePath("/api/new/product");
   try {
     const formData = await request.formData();
 

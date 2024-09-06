@@ -4,8 +4,10 @@ import ConnectDatabase from "@/lib/db/OldClient";
 import Categories from "@/lib/db/models/Categories";
 import snowflake from "@/lib/useId";
 import clientPromise from "@/lib/db/Client";
+import { revalidatePath } from "next/cache";
 
 export async function POST(request: Request) {
+  revalidatePath("/api/new/category");
   try {
     const formData = await request.formData();
 
