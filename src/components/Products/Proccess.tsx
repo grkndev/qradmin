@@ -40,33 +40,25 @@ import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { Product } from "./Columns";
 import Icon from "../Icon";
+import axios from "axios";
 
-const categories = [
-  {
-    _id: "66129b58fa590dc6e12be320",
-    name: "Sıcak İçecekler",
-    slug: "sicak-icecekler",
-  },
-  {
-    _id: "66129c9efa590dc6e12be328",
-    name: "Pizzalar",
-    slug: "pizzalar",
-  },
-  {
-    _id: "66163975addf71f703dcd9f9",
-    name: "Waffle & Pasta",
-    slug: "waffle-&-pasta",
-  },
-];
 export default function Proccess({ product }: { product: Product }) {
   const { toast } = useToast();
   const [editedProduct, setEditedProduct] = useState<Partial<Product>>();
   const [selectedCategory, setSelectedCategory] = useState<Category>();
-  const [filtredCategory, setFiltredCategory] =
-    useState<Category[]>(categories);
+  const [filtredCategory, setFiltredCategory] = useState<Category[]>();
 
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  React.useEffect(() => {
+    getCategories();
+  }, []);
+  const getCategories = async () => {
+    const { data } = await axios.get(`/api/get/categories`);
+    setCategories(data.categories);
+  };
 
   function handleDelete() {
     toast({

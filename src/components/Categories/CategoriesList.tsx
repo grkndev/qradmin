@@ -33,8 +33,7 @@ type Category = {
   image: any;
   slug: string;
 };
-export const revalidate = 10;
-export const dynamicParams = true;
+
 export default function CategoriesList() {
   const [categories, setCategories] = useState<Category[] | null>(null);
   const [newCategory, setNewCategory] = useState<Partial<Category>>();
@@ -51,7 +50,6 @@ export default function CategoriesList() {
   }, []);
 
   async function handleDelete() {
-    console.log(editCategory?.categoryId);
     const { data } = await axios.delete(
       `/api/delete/category`,
       {

@@ -2,6 +2,7 @@ import React from "react";
 import { Product, columns } from "./Columns";
 import { DataTable } from "./DataTable";
 import axios from "axios";
+import { Category } from "@/app/(categories)/(products)/products/page";
 
 export default function DemoTable() {
   const [data, setData] = React.useState<Product[]>([]);
@@ -9,11 +10,7 @@ export default function DemoTable() {
     getProducts();
   }, []);
   const getProducts = async () => {
-    const { data } = await axios.get(`${process.env.API_URL}/api/get/products`, {
-      headers: {
-        "Cache-Control": "no-store, max-age=0",
-      },
-    });
+    const { data } = await axios.get(`/api/get/products`);
     setData(data.data);
   };
 
