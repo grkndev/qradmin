@@ -1,6 +1,5 @@
 import { uploadFile } from "@/lib/s3Client";
 import { NextResponse } from "next/server";
-import ConnectDatabase from "@/lib/db/OldClient";
 import Categories from "@/lib/db/models/Categories";
 import snowflake from "@/lib/useId";
 import clientPromise from "@/lib/db/Client";
